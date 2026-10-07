@@ -1,0 +1,10 @@
+z_dim: ${target.z_dim}
+epsilon_dim: 3
+hidden_dim: 10
+num_layers: 2
+activation: relu
+variance_parameterization: logvar
+log_var_init: -8.0
+log_var_min: -20.0
+device: ${device}
+uniform: false # Whether to use uniform prior over epsilon

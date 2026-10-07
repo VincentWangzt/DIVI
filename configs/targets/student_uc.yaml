@@ -1,0 +1,4 @@
+z_dim: 2
+epsilon_dim: 4
+bbox: [-5, 5, -5, 5]
+baseline_path: baselines/exact/student_uc_exact_100k.pt

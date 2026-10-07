@@ -1,0 +1,3 @@
+z_dim: 100
+epsilon_dim: 100
+baseline_path: baselines/mcmc/Langevin_post.pt

@@ -1,0 +1,14 @@
+# Overrides to score_approximation.yaml; uses the same frozen checkpoints and
+# cached AISIVI proposal fits. Refitting happens outside the timed region.
+selection:
+  checkpoint_epochs: [10000]
+
+evaluation:
+  batch_sizes: [1, 128]
+  warmup_calls: 10
+  timed_calls: 100
+
+output:
+  report_dir: results/score_estimator_timing/reports
+  scratch_results_dir: results/score_estimator_timing/scratch
+  scratch_tb_dir: tb_logs/score_estimator_timing/scratch

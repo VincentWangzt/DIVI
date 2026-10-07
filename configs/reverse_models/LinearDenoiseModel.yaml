@@ -1,0 +1,8 @@
+z_dim: ${target.z_dim}
+device: ${device}
+use_optimizer: false
+warmup:
+  enabled: true
+  batch_size: 8192
+  epochs: 1
+  loss_log_freq: 1

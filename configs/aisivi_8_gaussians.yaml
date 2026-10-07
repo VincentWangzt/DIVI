@@ -1,0 +1,89 @@
+# Global settings
+# - `seed`: Random seed used for reproducibility across torch operations.
+# - `cuda_visible_devices`: Comma-separated GPU indices exposed to the process.
+# - `use_cuda`: Toggle GPU usage if CUDA is available.
+seed: 42
+cuda_visible_devices: "0"
+use_cuda: true
+
+runner_type: AISIVI
+target_type: 8_gaussians
+vi_model_type: ConditionalGaussian
+reverse_model_type: ConditionalRealNVP
+
+train:
+  epochs: 10000
+  batch_size: 128
+  reverse_sample_num: 1024
+  grad_clip: 10.0
+  vi:
+    lr: 1.0e-3
+    scheduler:
+      type: StepLR
+      step_size: 1000
+      gamma: 0.9
+  reverse:
+    lr: 1.0e-3
+    batch_size: 1024
+    epochs: 1
+    update_freq: 1
+    scheduler:
+      type: StepLR
+      step_size: 2000
+      gamma: 0.1
+  annealing:
+    enabled: true
+    scheme: linear
+    steps: 5000
+  log:
+    metric_log_freq: 100
+    loss_log_freq: 100
+    reverse_log_freq: 500
+    time_avg_window: 500
+  checkpoint:
+    enabled: true
+    freq: 1000
+  sample:
+    freq: 1000
+    num: 10000
+  plot:
+    freq: 1000
+    num: 10000
+
+metric:
+  kl_ite:
+    enabled: true
+    num_samples: 10000
+  w2:
+    enabled: true
+    num_samples: 10000
+    num_projections: 1000
+  elbo:
+    enabled: true
+    batch_size: 512
+    num_batches: 10
+    num_z_samples: 5000
+  fisher:
+    enabled: false
+    num_samples: 1000
+    num_is_samples: 512
+  ksd:
+    enabled: false
+    num_samples: 2000
+  mmd:
+    enabled: false
+    num_samples: 1000
+  bnn:
+    enabled: false
+    num_samples: 500
+  expected_log_marginal:
+    enabled: false
+    num_ref_samples: 1000
+    num_model_samples: 50000
+    sample_batch_size: 50000
+    dim_chunk: 50
+    ref_chunk: 500
+    model_chunk: 5000
+    min_bandwidth: 1.0e-6
+    dtype: float32
+

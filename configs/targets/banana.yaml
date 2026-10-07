@@ -1,0 +1,4 @@
+z_dim: 2
+epsilon_dim: 4
+bbox: [-3.5, 3.5, -6, 1]
+baseline_path: baselines/exact/banana_exact_100k.pt

@@ -1,0 +1,50 @@
+# Shared DIVI checkpoint evaluation. Explicit run_dirs override the existing manifest.
+selection:
+  manifest_path: campaigns/default_config_grid/manifest.json
+  run_dirs: []
+  targets: [x_shaped]
+  seeds: auto
+  checkpoint_epochs: [2000, 4000, 6000, 8000, 10000]
+  methods: [SIVI, UIVI, AISIVI, DIVI]
+
+estimator_configs:
+  SIVI: configs/sivi_{target}.yaml
+  UIVI: configs/uivi_{target}.yaml
+  AISIVI: configs/aisivi_{target}.yaml
+
+evaluation:
+  device: auto
+  seed: 20260728
+  forward_batch_size: 1024
+  aisivi_z_chunk_size: 128
+  resume: true
+  aisivi_refit:
+    steps: 10000
+    batch_size: 1024
+  reference:
+    total_samples: 100000
+    num_chains: 20
+    burn_in_steps: 1000
+    thinning: 1
+    step_size: 0.002
+    leapfrog_steps: 20
+    init_jitter_scale: 0.01
+    adapt_step_size: true
+    target_acceptance: 0.9
+    adaptation_rate: 0.3
+    min_step_size: 0.00001
+    max_step_size: 0.01
+    divergence_threshold: 1000.0
+    accumulator_dtype: float64
+    quality:
+      max_divergence_fraction: 0.01
+      max_score_rhat_p95: 1.1
+      max_epsilon_rhat_p95: 2.0
+      min_post_burn_acceptance_rate: 0.6
+      min_worst_chain_acceptance_rate: 0.05
+
+output:
+  report_dir: results/score_approximation/reports
+  cache_dir: results/score_approximation/cache
+  scratch_results_dir: results/score_approximation/scratch
+  scratch_tb_dir: tb_logs/score_approximation/scratch

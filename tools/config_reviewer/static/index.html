@@ -1,0 +1,101 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Config Reviewer</title>
+    <link rel="stylesheet" href="/static/styles.css">
+  </head>
+  <body>
+    <header class="app-header">
+      <div>
+        <h1>Config Reviewer</h1>
+        <p id="subtitle">Cross-method and cross-target config comparison</p>
+      </div>
+      <div class="status-row">
+        <span id="liveStatus" class="status-pill">live reload pending</span>
+        <button id="refreshButton" type="button">Refresh</button>
+      </div>
+    </header>
+
+    <main class="layout">
+      <aside class="sidebar">
+        <section>
+          <label for="modeSelect">Comparison</label>
+          <select id="modeSelect">
+            <option value="methods_for_target">Methods on target</option>
+            <option value="targets_for_method">Targets for method</option>
+          </select>
+        </section>
+
+        <section id="methodControl">
+          <label for="methodSelect">Method</label>
+          <select id="methodSelect"></select>
+        </section>
+
+        <section id="methodGroupControl">
+          <label for="methodGroupSelect">Method group</label>
+          <select id="methodGroupSelect"></select>
+        </section>
+
+        <section id="targetControl">
+          <label for="targetSelect">Target</label>
+          <select id="targetSelect"></select>
+        </section>
+
+        <section id="groupControl">
+          <label for="groupSelect">Target group</label>
+          <select id="groupSelect"></select>
+        </section>
+
+        <section class="check-row">
+          <input id="changedOnly" type="checkbox">
+          <label for="changedOnly">Changed only</label>
+        </section>
+
+        <section>
+          <label for="viewSelect">View</label>
+          <select id="viewSelect">
+            <option value="table">Key table</option>
+            <option value="raw">Resolved YAML</option>
+            <option value="matrix">Summary matrix</option>
+          </select>
+        </section>
+
+        <section id="multiPicker" class="multi-picker"></section>
+      </aside>
+
+      <section class="content">
+        <div class="summary-strip">
+          <div>
+            <h2 id="comparisonTitle">Loading...</h2>
+            <p id="comparisonSummary"></p>
+          </div>
+          <input id="pathFilter" type="search" placeholder="Filter key paths">
+        </div>
+
+        <div id="configColumns" class="config-columns"></div>
+        <div id="errorBox" class="error-box hidden"></div>
+
+        <section id="tableView" class="view-panel">
+          <div class="table-wrap">
+            <table id="keyTable">
+              <thead id="keyTableHead"></thead>
+              <tbody id="keyTableBody"></tbody>
+            </table>
+          </div>
+        </section>
+
+        <section id="rawView" class="view-panel hidden">
+          <div id="rawPanels" class="raw-panels"></div>
+        </section>
+
+        <section id="matrixView" class="view-panel hidden">
+          <div id="matrixPanel"></div>
+        </section>
+      </section>
+    </main>
+
+    <script src="/static/app.js"></script>
+  </body>
+</html>

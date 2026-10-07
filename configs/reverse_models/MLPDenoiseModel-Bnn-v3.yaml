@@ -1,0 +1,10 @@
+z_dim: ${target.z_dim}
+device: ${device}
+hidden_dim: 512
+num_layers: 4
+use_optimizer: true
+warmup:
+  enabled: true
+  lr: 2.0e-3
+  batch_size: 2048
+  epochs: 5000

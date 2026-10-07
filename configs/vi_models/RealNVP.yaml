@@ -1,0 +1,9 @@
+z_dim: ${target.z_dim}
+epsilon_dim: ${target.z_dim}
+hidden_dim: 128
+num_hidden_layers: 2
+num_flow_layers: 4
+activation: silu
+scale_clip: 3.0
+base_trainable: true
+device: ${device}

@@ -1,0 +1,6 @@
+z_dim: ${target.z_dim}
+epsilon_dim: ${target.epsilon_dim}
+hidden_dim: 128
+num_layers: 2
+device: ${device}
+uniform: true # Whether to use uniform prior over epsilon

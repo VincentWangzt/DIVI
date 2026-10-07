@@ -1,0 +1,232 @@
+campaign:
+  slug: default_config_grid
+  manifest_path: campaigns/default_config_grid/manifest.json
+  output_dir: campaigns/default_config_grid/generated_reports/finalization
+  scratch_results_dir: results/default_config_grid/finalization_scratch
+  scratch_tb_dir: tb_logs/default_config_grid/finalization_scratch
+
+selection:
+  seeds: auto
+  methods: [SIVI, UIVI, AISIVI, DIVI, KSIVI]
+  evaluation_targets: [banana, multimodal, x_shaped, student_uc, 8_gaussians, Langevin_post]
+  scatter_targets: [x_shaped, student_uc, 8_gaussians]
+  scatter_methods: [GroundTruth, AISIVI, UIVI, DIVI]
+  kl_curve_targets: [x_shaped, student_uc, 8_gaussians]
+  kl_curve_methods: [UIVI, AISIVI, DIVI]
+  grad_norm_targets: [x_shaped, Langevin_post]
+  grad_norm_methods: [DIVI]
+  weight_norm_targets: [x_shaped, Langevin_post]
+  weight_norm_methods: [DIVI]
+  m_eps_targets: [x_shaped, Langevin_post]
+  m_eps_methods: [DIVI]
+  vi_fourth_moment_targets: [x_shaped, Langevin_post]
+  vi_fourth_moment_methods: [DIVI]
+  score_4th_moment_targets: [x_shaped, Langevin_post]
+  score_4th_moment_methods: [DIVI]
+  score_linearity_targets: [x_shaped, Langevin_post]
+  score_linearity_methods: [DIVI]
+  score_linearity_seeds: [42]
+  score_norm_linearity_targets: [x_shaped, Langevin_post]
+  score_norm_linearity_methods: [DIVI]
+  score_norm_linearity_seeds: [42]
+  score_norm_linearity_uniform_targets: [x_shaped, Langevin_post]
+  score_norm_linearity_uniform_methods: [DIVI]
+  score_norm_linearity_uniform_seeds: [42]
+  bnn_targets: [Bnn_boston, Bnn_concrete, Bnn_power, Bnn_protein, Bnn_winered, Bnn_yacht]
+  seed_for_figures: 42
+  seed_overrides:
+    AISIVI: 44
+
+modules:
+  evaluate: true
+  scatter_grid: true
+  scatter_hist_grid: true
+  toy_tables: true
+  toy_method_grid: true
+  langevin_table: true
+  student_edge_table: true
+  langevin_trace_grid: true
+  bnn_table: true
+  kl_iteration_grid: true
+  kl_time_grid: true
+  grad_norm_iteration_grid: true
+  weight_norm_iteration_grid: true
+  m_eps_iteration_grid: true
+  vi_fourth_moment_iteration_grid: true
+  score_4th_moment_iteration_grid: true
+  score_diff_l2_fourth_iteration_grid: true
+  score_linearity_grid: true
+  score_norm_linearity_grid: true
+  score_norm_linearity_uniform_grid: true
+
+evaluation:
+  device: auto
+  overwrite: false
+  fail_fast: true
+  elbo:
+    batch_size: 2048
+    num_batches: 20
+    num_z_samples: 5000
+  w2:
+    num_samples: 10000
+    num_projections: 5000
+  truncated_w2:
+    enabled: true
+    target_widths:
+      8_gaussians: 6
+      student_uc: 8
+    accepted_samples: 10000
+    sample_batch_size: 20000
+    max_draws: 1000000000
+  student_uc_constrained_w2:
+    enabled: true
+    widths: [5, 8, 10]
+    accepted_samples: 10000
+    sample_batch_size: 20000
+    max_draws: 1000000000
+  langevin_kde_elm:
+    enabled: true
+    num_ref_samples: 1000
+    num_model_samples: 100000
+    sample_batch_size: 10000
+    dim_chunk: 25
+    ref_chunk: 500
+    model_chunk: 20000
+    dtype: float32
+    sgld:
+      enabled: true
+      reference_path: baselines/mcmc/Langevin_post.pt
+      model_path: baselines/mcmc/Langevin_post_sgld_100k.pt
+      seed: 0
+  bnn:
+    num_samples: 2000
+  m_eps:
+    n_samples: 1024
+    n_samples_override:
+      Bnn_boston: 128
+    checkpoint_stride: 1
+    overwrite: false
+  vi_fourth_moment:
+    n_samples: 1024
+    checkpoint_stride: 1
+    overwrite: false
+  score_4th_moment:
+    n_samples: 10240
+    checkpoint_stride: 1
+    overwrite: false
+  score_linearity:
+    checkpoints: [2000, 5000, 10000]
+    n_samples: 2048
+    overwrite: false
+  score_norm_linearity:
+    checkpoints: [2000, 5000, 10000]
+    n_samples: 2048
+    overwrite: false
+  score_norm_linearity_uniform:
+    checkpoints: [2000, 5000, 10000]
+    n_samples: 10000
+    max_radius:
+      x_shaped: 10
+      Langevin_post: 20
+    overwrite: false
+
+plots:
+  scatter:
+    num_points: 2000
+    figsize_per_panel: [2.25, 2.1]
+    alpha: 0.45
+    point_size: 3
+    title_fontsize: 13
+    label_fontsize: 13
+    w_pad: 0.9
+    h_pad: 0.35
+  scatter_hist:
+    num_points: 100000
+    sample_batch_size: 10000
+    bins: 72
+    contour_grid_size: 180
+    contour_levels: 5
+    contour_linewidth: 0.8
+    hist_alpha: 0.95
+    figsize_per_panel: [2.25, 2.1]
+    title_fontsize: 13
+    label_fontsize: 13
+    w_pad: 0.9
+    h_pad: 0.35
+  langevin_trace:
+    num_samples: 10000
+    figsize_per_panel: [3.2, 2.4]
+  kl_iteration:
+    figsize_per_panel: [3.5, 2.5]
+    n_grid: 200
+    linewidth: 1.5
+    band_alpha: 0.25
+    title_fontsize: 13
+    label_fontsize: 12
+  kl_time:
+    figsize_per_panel: [3.5, 2.5]
+    n_grid: 200
+    linewidth: 1.5
+    band_alpha: 0.25
+    title_fontsize: 13
+    label_fontsize: 12
+  grad_norm_iteration:
+    figsize_per_panel: [3.5, 2.5]
+    n_grid: 200
+    linewidth: 1.5
+    band_alpha: 0.25
+    title_fontsize: 13
+    label_fontsize: 12
+    log_scale: false
+  weight_norm_iteration:
+    figsize_per_panel: [3.5, 2.5]
+    n_grid: 200
+    linewidth: 1.5
+    band_alpha: 0.25
+    title_fontsize: 13
+    label_fontsize: 12
+    log_scale: false
+  m_eps_iteration:
+    figsize_per_panel: [3.5, 2.5]
+    n_grid: 200
+    linewidth: 1.5
+    band_alpha: 0.25
+    title_fontsize: 13
+    label_fontsize: 12
+  vi_fourth_moment_iteration:
+    figsize_per_panel: [3.5, 2.5]
+    n_grid: 200
+    linewidth: 1.5
+    band_alpha: 0.25
+    title_fontsize: 13
+    label_fontsize: 12
+  score_4th_moment_iteration:
+    figsize_per_panel: [3.5, 2.5]
+    n_grid: 200
+    linewidth: 1.5
+    band_alpha: 0.25
+    title_fontsize: 13
+    label_fontsize: 12
+  score_linearity_grid:
+    figsize_per_panel: [4.5, 3.5]
+    alpha: 1.0
+    marker_size: 6.0
+    title_fontsize: 13
+    label_fontsize: 12
+  score_norm_linearity_grid:
+    figsize_per_panel: [4.5, 3.5]
+    alpha: 1.0
+    marker_size: 6.0
+    title_fontsize: 13
+    label_fontsize: 12
+  score_norm_linearity_uniform_grid:
+    figsize_per_panel: [4.5, 3.5]
+    alpha: 1.0
+    marker_size: 6.0
+    title_fontsize: 13
+    label_fontsize: 12
+
+tables:
+  best_bold: true
+  value_precision: 3
+  se_precision: 2

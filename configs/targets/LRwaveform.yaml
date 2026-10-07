@@ -1,0 +1,5 @@
+z_dim: 22
+epsilon_dim: 22
+
+data:
+  batch_size: null  # null = full data; set integer for minibatch

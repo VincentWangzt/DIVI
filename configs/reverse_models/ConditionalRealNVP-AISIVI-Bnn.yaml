@@ -1,0 +1,14 @@
+z_dim: ${vi_model.z_dim}
+epsilon_dim: ${vi_model.epsilon_dim}
+hidden_dim: 256
+num_layers: 16
+logit: ${vi_model.uniform}
+device: ${device}
+use_optimizer: true
+weight_decay: 0.0
+warmup:
+  enabled: true
+  lr: 5.0e-5
+  weight_decay: 0.0
+  batch_size: 100
+  epochs: 500

@@ -1,0 +1,11 @@
+z_dim: ${target.z_dim}
+epsilon_dim: ${target.epsilon_dim}
+device: ${device}
+use_optimizer: false
+warmup:
+  enabled: false
+  lr: 1.0e-2
+  batch_size: 8192
+  epochs: 500
+  kl_log_freq: 10
+  loss_log_freq: 100
